@@ -13,6 +13,7 @@ Personalizar queries y crea auditorías para tus proyectos de backend.
 
 Curso de Platzi
 Por: Profesor Alejandro Ramírez
+https://platzi.com/cursos/java-spring-data/
 
 HERRAMIENTAS
 Java 17 - MySQL - IntelliJ IDEA - Postman
