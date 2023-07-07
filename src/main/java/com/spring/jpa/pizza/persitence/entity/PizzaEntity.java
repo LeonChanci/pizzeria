@@ -28,7 +28,7 @@ public class PizzaEntity {
     private Double price;
 
     @Column(columnDefinition = "TINYINT")
-    private Boolean vegatarian;
+    private Boolean vegetarian;
 
     @Column(columnDefinition = "TINYINT")
     private Boolean vegan;
