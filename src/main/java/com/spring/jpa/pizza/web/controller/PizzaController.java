@@ -31,7 +31,7 @@ public class PizzaController {
 
     @PostMapping
     public ResponseEntity<PizzaEntity> add(@RequestBody PizzaEntity pizza){
-        if (pizza.getIdPizza() == null || !this.pizzaService.existe(pizza.getIdPizza())){
+        if (pizza.getIdPizza() == null || !this.pizzaService.exist(pizza.getIdPizza())){
             return ResponseEntity.ok(this.pizzaService.save(pizza));
         }
         return ResponseEntity.badRequest().build();
@@ -40,8 +40,17 @@ public class PizzaController {
     //Put para actualizar
     @PutMapping
     public ResponseEntity<PizzaEntity> update(@RequestBody PizzaEntity pizza){
-        if (pizza.getIdPizza() != null && this.pizzaService.existe(pizza.getIdPizza())){
+        if (pizza.getIdPizza() != null && this.pizzaService.exist(pizza.getIdPizza())){
             return ResponseEntity.ok(this.pizzaService.save(pizza));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @DeleteMapping("/{idPizza}")
+    public ResponseEntity<PizzaEntity> delete(@PathVariable int idPizza){
+        if (this.pizzaService.exist(idPizza)) {
+            this.pizzaService.delete(idPizza);
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();
     }

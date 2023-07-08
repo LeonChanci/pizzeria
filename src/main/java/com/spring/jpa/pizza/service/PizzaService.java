@@ -31,7 +31,11 @@ public class PizzaService {
         return pizzaRepository.save(pizzaEntity);
     }
 
-    public boolean existe(int idPizza){
+    public void delete(int idPizza){
+        pizzaRepository.deleteById(idPizza);
+    }
+
+    public boolean exist(int idPizza){
         return pizzaRepository.existsById(idPizza);
     }
 }
