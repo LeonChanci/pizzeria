@@ -18,4 +18,7 @@ public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer
 
     //QueryMethods-> Obtener todas las pizzas activas dónde la descripción NO contenga {description} sin importar mayusculas o minusculas
     List<PizzaEntity> findAllByAvailableTrueAndDescriptionNotContainingIgnoreCase(String description);
+
+    //QueryMethods-> Obtener cuantas pizzas Veganas hay en BD
+    int countByVeganTrue();
 }
