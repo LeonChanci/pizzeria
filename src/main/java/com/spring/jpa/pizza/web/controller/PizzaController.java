@@ -51,9 +51,13 @@ public class PizzaController {
         return ResponseEntity.ok(this.pizzaService.getWithout(ingredient));
     }
 
+    @GetMapping("/vegansCount")
+    public ResponseEntity<Integer> getVeganPizzas(){
+        return ResponseEntity.ok(this.pizzaService.getCountPizzasVegan());
+    }
+
 
     //--------------POST-------------------//
-
     @PostMapping
     public ResponseEntity<PizzaEntity> add(@RequestBody PizzaEntity pizza){
         if (pizza.getIdPizza() == null || !this.pizzaService.exist(pizza.getIdPizza())){
@@ -71,6 +75,7 @@ public class PizzaController {
         return ResponseEntity.badRequest().build();
     }
 
+    //--------------DELETE-------------------//
     @DeleteMapping("/{idPizza}")
     public ResponseEntity<PizzaEntity> delete(@PathVariable int idPizza){
         if (this.pizzaService.exist(idPizza)) {
