@@ -44,5 +44,6 @@ public class OrderEntity {
 
     //Tipo de recuperación será Eager -> cuando tratemos de recuperr un OrderEntity también nos traiga esta relación
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    @OrderBy("price DESC")
     private List<OrderItemEntity> items;
 }

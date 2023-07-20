@@ -44,4 +44,7 @@ public class OrderService {
         return this.orderRepository.findAllByMethodIn(Arrays.stream(methodsArray).toList());
     }
 
+    public List<OrderEntity> getCustomerOrders(String idCustomer){
+        return this.orderRepository.findCustomerOrders(idCustomer);
+    }
 }

@@ -47,4 +47,9 @@ public class OrderController {
     public ResponseEntity<List<OrderEntity>> getByMethods(@PathVariable String methods){
         return ResponseEntity.ok(orderService.getByMethods(methods));
     }
+
+    @GetMapping("/customer/{id}")
+    public ResponseEntity<List<OrderEntity>> getByIdCustomer(@PathVariable String id){
+        return ResponseEntity.ok(orderService.getCustomerOrders(id));
+    }
 }
