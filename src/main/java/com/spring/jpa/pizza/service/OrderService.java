@@ -1,6 +1,7 @@
 package com.spring.jpa.pizza.service;
 
 import com.spring.jpa.pizza.persitence.entity.OrderEntity;
+import com.spring.jpa.pizza.persitence.projection.OrderSumary;
 import com.spring.jpa.pizza.persitence.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,8 +44,11 @@ public class OrderService {
         String[] methodsArray = methods.split("-");
         return this.orderRepository.findAllByMethodIn(Arrays.stream(methodsArray).toList());
     }
-
     public List<OrderEntity> getCustomerOrders(String idCustomer){
         return this.orderRepository.findCustomerOrders(idCustomer);
+    }
+
+    public OrderSumary getSumary(int orderId){
+        return this.orderRepository.findSumary(orderId);
     }
 }
