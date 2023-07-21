@@ -17,11 +17,11 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
     //QueryMethods-> Obtener todas las ordenes dónde los métodos de orden sean los específicos.
     List<OrderEntity> findAllByMethodIn(List<String> methods);
 
-    // @Query -> usando SQL Nativo (nativeQuery = true) Obtener todas las ordenes por medio del id del cliente
+    // @Query -> Usando SQL Nativo (nativeQuery = true) Obtener todas las ordenes por medio del id del cliente
     @Query(value = "SELECT * FROM pizza_order WHERE id_customer = :id", nativeQuery = true)
     List<OrderEntity> findCustomerOrders(@Param("id") String idCustomer);
 
-    // @Query ->  usando SQL Nativo PROYECCIÓN
+    // @Query -> Usando SQL Nativo PROYECCIÓN
     @Query(value =
             "SELECT po.id_order AS idOrder, cu.name AS customerName, po.date AS orderDate, " +
             "        po.total AS orderTotal, GROUP_CONCAT(pi.name) AS pizzaNames " +

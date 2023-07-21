@@ -1,7 +1,11 @@
 package com.spring.jpa.pizza.persitence.repository;
 
 import com.spring.jpa.pizza.persitence.entity.PizzaEntity;
+import com.spring.jpa.pizza.service.dto.UpdatePizzaPriceDTO;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.ListCrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,4 +29,15 @@ public interface PizzaRepository extends ListCrudRepository<PizzaEntity, Integer
 
     //QueryMethods-> Obtener cuantas pizzas Veganas hay en BD
     int countByVeganTrue();
+
+    //@Query -> Usando SQL Nativo -> Usando Spring Expresión Lenguage
+    //:#{#} -> Se usa para obtener el parametros del obtejo DTO y utilizarlos en la consulta
+    //Se usa la anotación @Modifying en los @Query para insertar, actualzar o eliminar
+    //Si no se usa @Modifying solo funcionará para Obtener (SELECT)
+    @Modifying
+    @Query(value =
+            "UPDATE pizza " +
+            "SET price = :#{#newPizzaPrice.newPrice} " +
+            "WHERE id_pizza = :#{#newPizzaPrice.pizzaId}", nativeQuery = true)
+    void updatePrice(@Param("newPizzaPrice") UpdatePizzaPriceDTO newPizzaPrice);
 }
