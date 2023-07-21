@@ -3,11 +3,13 @@ package com.spring.jpa.pizza.service;
 import com.spring.jpa.pizza.persitence.entity.PizzaEntity;
 import com.spring.jpa.pizza.persitence.repository.PizzaPagSortRepository;
 import com.spring.jpa.pizza.persitence.repository.PizzaRepository;
+import com.spring.jpa.pizza.service.dto.UpdatePizzaPriceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.print.Pageable;
 import java.util.List;
@@ -93,6 +95,12 @@ public class PizzaService {
         return pizzaRepository.save(pizzaEntity);
     }
 
+    //--------------PUT-------------------//
+    //Se usa @Transactional para hacer modificaciones
+    @Transactional
+    public void updatePrice(UpdatePizzaPriceDTO dto){
+        pizzaRepository.updatePrice(dto);
+    }
 
     //--------------DELETE-------------------//
     public void delete(int idPizza){
