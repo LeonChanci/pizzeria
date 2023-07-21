@@ -4,11 +4,13 @@ import com.spring.jpa.pizza.persitence.entity.PizzaEntity;
 import com.spring.jpa.pizza.persitence.repository.PizzaPagSortRepository;
 import com.spring.jpa.pizza.persitence.repository.PizzaRepository;
 import com.spring.jpa.pizza.service.dto.UpdatePizzaPriceDTO;
+import com.spring.jpa.pizza.service.exception.EmailApiException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.print.Pageable;
@@ -96,10 +98,25 @@ public class PizzaService {
     }
 
     //--------------PUT-------------------//
-    //Se usa @Transactional para hacer modificaciones
-    @Transactional
+    //Se usa @Transactional para hacer inserciones, modificaciones y eliminaciones teniendo en cuenta
+    //las propiedades ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad)
+    //Garantiza cada una de los llamados a la BD y que todos se realicen bien, sino se hace rollback
+
+    //Atributo noRollbackFor, para que NO se haga un rollback cuando suceda una excepcion de tipo EmailApiException.class
+    //Si sucede una exception de otro tipo, SI se hará rollback
+
+    //Atributo propagation, por defecto es Propagation.REQUIRED (Obliga a tener una transacción, si no exite la crea)
+    //Propagation.MANDATORY -> no es necesario que exista una transacción pero retorna exception para crearla
+    @Transactional(noRollbackFor = EmailApiException.class, propagation = Propagation.MANDATORY)
     public void updatePrice(UpdatePizzaPriceDTO dto){
         pizzaRepository.updatePrice(dto);
+        this.sendEmail();
+    }
+
+    //Método de prueba para retornar una excepción, al momento de simular "enviar" un correo
+    //cuando se actualice el precio de una Pizza (Se usa en el método anterior)
+    private void sendEmail(){
+        throw new EmailApiException();
     }
 
     //--------------DELETE-------------------//
