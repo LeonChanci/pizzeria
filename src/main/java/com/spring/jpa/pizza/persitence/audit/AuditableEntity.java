@@ -1,4 +1,4 @@
-package com.spring.jpa.pizza.persitence.entity;
+package com.spring.jpa.pizza.persitence.audit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
