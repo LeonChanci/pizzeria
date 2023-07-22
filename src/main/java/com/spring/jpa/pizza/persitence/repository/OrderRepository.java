@@ -3,6 +3,7 @@ package com.spring.jpa.pizza.persitence.repository;
 import com.spring.jpa.pizza.persitence.entity.OrderEntity;
 import com.spring.jpa.pizza.persitence.projection.OrderSumary;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -32,4 +33,9 @@ public interface OrderRepository extends ListCrudRepository<OrderEntity, Integer
             "WHERE po.id_order = :orderId " +
             "GROUP BY po.id_order, cu.name, po.date, po.total", nativeQuery = true)
     OrderSumary findSumary(@Param("orderId") int orderId);
+
+    // Store Procedure -> Se utiliza la anotación @Procedure para idicar el procedimiento a utilizar de la BD
+    // Value={name_procedure}, outputParameterName = {name_parametro_salida}
+    @Procedure(value = "take_random_pizza_order", outputParameterName = "order_taken")
+    boolean saveRandomOrder(@Param("id_customer") String idCustomer, @Param("method") String method);
 }
